@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spark-slave
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        spark: slave
+    spec:
+      containers:
+      - name: spark-slave-container
+        image: registry.eu-gb.bluemix.net/brunocf_containers/spark2_2:latest
+        command: ["/home/spark/spark-2.2.0-bin-hadoop2.7/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark-master:7077"]
+        ports:
+        - name: spark-clu-port
+          containerPort: 7077
+        - name: spark-m-ui-port
+          containerPort: 8080
+        volumeMounts:
+            - mountPath: /home/spark/jobs
+              name: jobs-vol
+      volumes:
+      - name: jobs-vol
+        persistentVolumeClaim:
+            claimName: spark-jobs
