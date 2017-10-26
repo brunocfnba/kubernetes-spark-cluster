@@ -47,6 +47,13 @@ kubectl port-forward <your spark master pod name> 8080:8080
 That's it, just go to your browser and open localhost:8080 to access the Spark master UI.
 >You might need to port-forward the workers UI as well if you want to check workers details. To do that simply follow the same process above replacing the pod name for the one you want to. The default port workers UI listen to is 8081. To avoid port conflicts on your local machine you can map the ports (right number to the colon) to whichever you want too.
 
+### Scaling the Cluster
+To increase or decrease the number of workers you have in your cluster all you have to do is increase / decrease the number of replicas your spark-slave deployment have running the following command:
+```
+kubectl scale deployments spark-slave --replicas=10
+```
+>Kubernetes also support autoscaling based on CPU usage and other parameters. Feel free to implement that.
+
 ### Create and Run the Jupyter notebook
 Assuming you have already created the Jupyter image on step one above let's create the jupyter deployment. Run the following and don't forget to replace the image name in the file (line 14) for the one you have.
 ```
