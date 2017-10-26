@@ -11,7 +11,7 @@ spec:
     spec:
         containers:
           - name: spark-master-container
-            image: registry.eu-gb.bluemix.net/holmes/spark2_2:latest
+            image: registry.eu-gb.bluemix.net/brunocf_containers/spark2_2:latest
             command: ["/home/spark/spark-2.2.0-bin-hadoop2.7/bin/spark-class","org.apache.spark.deploy.master.Master"]
             ports:
             - name: spark-clu-port
