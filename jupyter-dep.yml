@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jupyter
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        spark: master
+    spec:
+        containers:
+          - name: jupyter-container
+            image: registry.eu-gb.bluemix.net/brunocf_containers/jupyter:latest
+            command: ["jupyterhub -f /home/spark/jupyter_conf/jupyterhub_config.py"]
+            ports:
+            - name: jupyter-ui-port
+              containerPort: 8000
+            volumeMounts:
+                - mountPath: /home/spark/jobs
+                  name: jobs-vol
+        volumes:
+        - name: jobs-vol
+          persistentVolumeClaim:
+              claimName: spark-jobs
