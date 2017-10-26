@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: spark-master
+spec:
+  ports:
+    - port: 7077
+      targetPort: spark-clu-port
+      name: spark-cluster
+    - port: 8080
+      targetPort: spark-m-ui-port
+      name: spark-m-ui
+  selector:
+    spark: master
